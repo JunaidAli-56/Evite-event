@@ -1,0 +1,43 @@
+.event-card {
+    // box-shadow: #087788 0px 7px 29px 0px;
+    /* From https://css.glass */
+    background: #ffffff33;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    h2 {
+        color: #087788;
+        font-weight: 700;
+    }
+
+    .event-row {
+
+        input {
+            // box-shadow: #ffffff33 0px 7px 29px 0px;
+            font-weight: 500;
+            padding: 10px;
+            border: 1px solid #0978893f;
+        }
+    }
+
+    .mybtn,
+    .deletebtn {
+        background-color: #087788;
+        border-radius: 12px;
+        height: 45px;
+        width: 100px;
+        color: white;
+        border: 0;
+
+        :hover {
+            background-color: #0877887d;
+        }
+    }
+
+    .deletebtn {
+        background-color: #D61355;
+    }
+}
