@@ -8,6 +8,7 @@ import About from "./About"
 import { Storage } from "./Storage";
 import Navbar from "components/Navbar/Navbar";
 import AddEvent from "./AddEvent";
+import JoinEvent from "./JoinEvent";
 
 function Index() {
     return (
@@ -21,6 +22,7 @@ function Index() {
                     <Route path="/about" element={<About />} />
                     <Route path="/addevent" element={<AddEvent />} />
                     <Route path="/storage" element={<Storage />} />
+                    <Route path="/joinevent" element={<JoinEvent />} />
                     <Route path="*" element={<>No Page Found</>} />
                 </Routes>
             </main>

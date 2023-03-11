@@ -8,7 +8,7 @@ const Footer = (props) => {
             <footer>
                 <div className="container-fluid bg-primary text-white">
                     <div className="row footer-lower pt-5">
-                        <Link class="navbar-brand mb-3" to="/">
+                        <Link className="navbar-brand mb-3" to="/">
                             <img src="https://static1.squarespace.com/static/58c9e16237c5813452abfd18/t/5ad632391ae6cf3660bdf4d0/1523987004984/pink.png" alt="Bootstrap" width="40" height="40" />
                         </Link>
                         <div className="col-lg-3 col-md-6 col-sm-6 col-contact px-3">
@@ -66,11 +66,11 @@ const Footer = (props) => {
                     <div className="row icon-row">
                         <div className="col py-3">
                             <ul>
-                                <li><Link><i class="bi bi-facebook"></i></Link></li>
-                                <li><Link><i class="bi bi-skype"></i></Link></li>
-                                <li><Link><i class="bi bi-youtube"></i></Link></li>
-                                <li><Link><i class="bi bi-twitter"></i></Link></li>
-                                <li><Link><i class="bi bi-pinterest"></i></Link></li>
+                                <li><Link><i className="bi bi-facebook"></i></Link></li>
+                                <li><Link><i className="bi bi-skype"></i></Link></li>
+                                <li><Link><i className="bi bi-youtube"></i></Link></li>
+                                <li><Link><i className="bi bi-twitter"></i></Link></li>
+                                <li><Link><i className="bi bi-pinterest"></i></Link></li>
                             </ul>
                         </div>
                     </div>

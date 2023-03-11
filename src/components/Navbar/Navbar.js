@@ -169,7 +169,7 @@ export default function Navbar() {
 
                     <div className='d-flex logo-con'>
                         <div className='img-logo me-2'>
-                            <Link class="navbar-brand" to="/">
+                            <Link className="navbar-brand" to="/">
                                 <img src="https://static1.squarespace.com/static/58c9e16237c5813452abfd18/t/5ad632391ae6cf3660bdf4d0/1523987004984/pink.png" alt="Bootstrap" width="40" height="40" />
                             </Link>
                         </div>
@@ -233,6 +233,9 @@ export default function Navbar() {
                         </Link>
                         <Link to="/addevent" className={classes.link}>
                             Add Event
+                        </Link>
+                        <Link to="/joinevent" className={classes.link}>
+                            Join Event
                         </Link>
                         <Link to="/dashboard" className={classes.link}>
                             Users

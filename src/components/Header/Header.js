@@ -5,7 +5,7 @@ function Header() {
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary bg-dark navbar-dark">
             <div className="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a className="navbar-brand" href="#">
                     <img src="https://g5.evitecdn.com/evite_logo_square.png" alt="Bootstrap" width="35" height="30" />
                 </a>
                 <Link to="/" className="navbar-brand">Navbar</Link>

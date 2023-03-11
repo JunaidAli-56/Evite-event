@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { firestore, storage } from "config/firebase";
-import { doc, serverTimestamp, setDoc, } from "firebase/firestore";
+import { collection, doc, getDocs, serverTimestamp, setDoc, updateDoc, } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import './addevent.scss'
-import { Link } from "react-router-dom";
+import { CollectionsBookmark } from "@mui/icons-material";
 const initialState = {
     fullName: "",
     email: '',
-    city: "",
+    dob: "",
     date: "",
-    subject: "",
-    title: "",
+    address: "",
+    message: "",
 }
-function AddEvent() {
+function JoinEvent() {
 
     const [state, setState] = useState(initialState);
     const [isProcessing, setIsProcessing] = useState(false);
     const [file, setFile] = useState({});
     const [imgUrl, setImgUrl] = useState({})
+
 
     const changeHandler = (e) => {
         const { name, value } = e.target;
@@ -26,11 +28,11 @@ function AddEvent() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        let { fullName, email, city, date, subject, title } = state;
+        let { fullName, email, dob, date, address, message } = state;
 
         fullName = fullName.trim();
-        subject = subject.trim();
-        title = title.trim();
+        address = address.trim();
+        message = message.trim();
 
 
         if (fullName.length < 3) {
@@ -39,23 +41,24 @@ function AddEvent() {
         if (window.isEmail(email)) {
             return window.toastify('Enter email correctly', 'error');
         }
-        if (subject.length < 3) {
-            return window.toastify('Enter your subject correctly', 'error');
+        if (address.length < 3) {
+            return window.toastify('Enter your Address correctly', 'error');
         }
-        if (title.length < 3) {
+        if (message.length < 3) {
             return window.toastify('Enter your message correctly', 'error');
         }
         // console.log(email, password)
 
         let formData = {
-            fullName, email, city, date, subject, title,
+            fullName, email, dob, date, address, message,
             id: window.getRandomId,
             serverTimestamp: serverTimestamp(),
         }
         setIsProcessing(true);
 
+
         if (file.name) {
-            window.toastify("Event is Uploading", "info")
+            window.toastify("Image is Uploading", "info");
             uploadFile(formData);
         } else {
             createDocument(formData)
@@ -69,10 +72,6 @@ function AddEvent() {
 
         const uploadTask = uploadBytesResumable(storageRef, file);
 
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
         uploadTask.on('state_changed',
             (snapshot) => {
                 // Observe state change events such as progress, pause, and resume
@@ -87,8 +86,6 @@ function AddEvent() {
                 setIsProcessing(false);
             },
             () => {
-                // Handle successful uploads on complete
-                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                     console.log('File available at', downloadURL)
                     setImgUrl(downloadURL);
@@ -102,12 +99,13 @@ function AddEvent() {
         console.log("doc is created");
         try {
             await setDoc(doc(firestore, "events", formData.id), formData);
-            window.toastify("Event added successfully", "success");
+            window.toastify("Join Event successfully", "success");
             setState(initialState);
         } catch (e) {
-            window.toastify("Error Adding Event", "error")
+            window.toastify("Error joining Event", "error")
         }
         setIsProcessing(false);
+
     }
 
     return (
@@ -117,7 +115,7 @@ function AddEvent() {
                     <div className="col mx-auto" style={{ maxWidth: "740px" }}>
                         <div className="card p-4 event-card">
                             <h2 className="text-center mb-5 py-2">
-                                Add Events
+                                Join Events
                             </h2>
                             <form onSubmit={handleSubmit}>
                                 <div className="row event-row px-5">
@@ -136,43 +134,32 @@ function AddEvent() {
 
                                     <div className="col-lg-6 col-md-12 mb-3">
                                         <input type="text" className="form-control"
-                                            placeholder="City" name="city"
-                                            value={state.city}
+                                            placeholder="Date of Birth" name="dob"
+                                            value={state.dob}
                                             onChange={changeHandler} />
                                     </div>
-                                    <div className="col-12 mb-3">
+                                    <div className="col-6 mb-3">
                                         <input type="date" className="form-control"
                                             placeholder="Event Date" name="date"
                                             value={state.date}
                                             onChange={changeHandler} />
-                                        {/* <DatePicker
-                                            label="Event date"
-                                            placeholder="Enter Date here"
-                                            classNames={classes}
-                                            clearable={true}
-                                            name="date"
-                                            value={state.date}
-                                            onChange={changeHandler}
-
-                                        /> */}
                                     </div>
-                                    <div className="col-12 mb-3">
-                                        <input type="text" className="form-control"
-                                            placeholder="Subject" name="subject"
-                                            value={state.subject}
-                                            onChange={changeHandler} />
-                                    </div>
-                                    <div className="col-12 mb-3">
+                                    <div className="col-6 mb-3">
                                         <input type="file" className="form-control"
                                             name="img"
-                                            value={state.img}
                                             onChange={(e) => { setFile(e.target.files[0]) }}
                                         />
                                     </div>
+                                    <div className="col-12 mb-3">
+                                        <input type="text" className="form-control"
+                                            placeholder="Address" name="address"
+                                            value={state.address}
+                                            onChange={changeHandler} />
+                                    </div>
                                     <div className="col mb-3">
                                         <textarea className="form-control"
-                                            name="title" onChange={changeHandler}
-                                            value={state.title}
+                                            name="message" onChange={changeHandler}
+                                            value={state.message}
                                             placeholder="Title...">
 
                                         </textarea>
@@ -185,7 +172,7 @@ function AddEvent() {
                                         </button></Link>
                                     <button className="mybtn" disabled={isProcessing}>
                                         {!isProcessing ?
-                                            <span>Submit</span>
+                                            <span>Join</span>
                                             :
                                             <span className="spinner spinner-grow"></span>
                                         }
@@ -201,5 +188,4 @@ function AddEvent() {
         </>
     )
 }
-
-export default AddEvent;
+export default JoinEvent;

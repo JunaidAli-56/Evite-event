@@ -65,30 +65,36 @@ function DasHome() {
                                         <li><h5>ID</h5> </li>
                                         <li><h5>Name</h5> </li>
                                         <li><h5>Email</h5> </li>
-                                        <li><h5>Message</h5> </li>
-                                        <li><h5>Actions</h5> </li>
                                     </ul>
+                                    <div className="action-div">
+                                        <h5>Actions</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="container-fluid getData-con">
+                        <div className="container-fluid getData-con px-4 text-center">
                             <div className="row">
                                 <div className="col getData-col">
                                     {document.map((doc, i) => {
                                         return (
-                                            <div className="card getData-card mt-3">
+                                            <div className="card getData-card mt-3 border-0"
+                                                key={i}>
                                                 <div className="p-2">
-                                                    <ul className=" m-0 py-2 px-3">
+                                                    <ul className=" m-0  px-3">
                                                         <li>{i + 1}</li>
-                                                        <li><p>{doc.id}</p> </li>
-                                                        <li><p>{doc.fullName}</p> </li>
-                                                        <li><p>{doc.email}</p> </li>
-                                                        <li><p>{doc.message}</p></li>
+                                                        <li>{doc.id}</li>
+                                                        <li>{doc.fullName}</li>
+                                                        <li>{doc.email}</li>
+                                                        <li>{doc.message}</li>
                                                     </ul>
                                                     <div className="btn-div">
-                                                        <button className="btn btn-primary me-2">Update</button>
-                                                        <button className="btn btn-danger">Delete</button>
+                                                        <button className="btn btn-primary me-2"
+                                                            onClick={() => { handleUpdate(doc) }}
+                                                        >Update</button>
+                                                        <button className="btn btn-danger"
+                                                            onClick={() => { handleDelete(doc) }}
+                                                        >Delete</button>
                                                     </div>
                                                 </div>
                                             </div>

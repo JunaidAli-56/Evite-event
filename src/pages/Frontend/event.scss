@@ -1,9 +1,77 @@
-.img-event {
-    padding-top: 10px;
+.event-card-col {
+    @media (max-width:765px) {
+        margin-top: 20px;
+    }
+}
 
-    img {
+.mycard {
+    position: relative;
+    padding: 10px;
+    border-radius: 12px;
+    border: 0;
+    box-shadow: rgba(149, 157, 165, 0.247) 0px 8px 24px;
 
+    .top-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        margin-top: 10px;
+        margin-left: -18px;
+        z-index: 100;
+        padding: 0px 5px;
+        background-color: #1098AD;
+        border-radius: 4px;
+
+        span {
+            font-size: 16px;
+            text-align: center;
+            color: #ffff;
+            font-weight: 500;
+            // border: 2px solid red;
+        }
+    }
+
+    .mycard-inner {
+        position: relative;
+        // border: 2px solid red;
+        height: 200px;
         border-radius: 12px;
+
+        img {
+            border-radius: 12px;
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+        // .mycard-inner-child2 {
+        //     border: 2px solid rgb(229, 255, 0);
+        //     position: absolute;
+        // }
+    }
+
+    .mycard-body {
+        padding: 5px 2px;
+        // margin: 0;
+
+        .mycard-title {
+            color: #0f7888;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 18px;
+            color: grey;
+        }
+
+        a {
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 17px;
+        }
+
     }
 
 }

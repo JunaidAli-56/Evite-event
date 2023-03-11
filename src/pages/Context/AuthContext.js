@@ -1,8 +1,10 @@
-import React, { useReducer, createContext, useEffect, useContext } from 'react'
-import { auth } from '../../config/firebase'
+import React, { useReducer, createContext, useEffect, useContext, useState } from 'react'
+import { auth, firestore } from '../../config/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
+import { collection, getDocs } from 'firebase/firestore'
 
 export const AuthContext = createContext()
+export const UserDataContext = createContext()
 
 const initialState = { isAuthenticated: false }
 
@@ -25,8 +27,6 @@ export function AuthContextProvider(props) {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
                 console.log(user)
                 console.log("User is signed in")
                 dispatch({ type: "LOGIN" })
@@ -35,7 +35,6 @@ export function AuthContextProvider(props) {
             }
         });
     }, [])
-
 
     return (
         <AuthContext.Provider value={{ authentication: state, dispatch }}>
@@ -46,3 +45,37 @@ export function AuthContextProvider(props) {
 export const useAuth = () => {
     return useContext(AuthContext)
 }
+
+
+export function UserDataContextProvider(props) {
+    const [document, setDocument] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // let name = "Junaid";
+    const readDocuments = async () => {
+        setIsLoading(true);
+        const querySnapshot = await getDocs(collection(firestore, "events"));
+
+        const array = [];
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            let data = doc.data();
+            array.push(data);
+            setIsLoading(false);
+        });
+        setDocument(array)
+    }
+    useEffect(() => {
+        readDocuments();
+    }, []);
+    return (
+        <UserDataContext.Provider value={document}>
+            {props.children}
+        </UserDataContext.Provider>
+    )
+
+}
+// export const useData = () => {
+//     return useContext(UserDataContext)
+// }
+
